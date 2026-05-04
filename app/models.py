@@ -1,5 +1,11 @@
 from typing import Optional
+from pydantic import BaseModel
 
+class AskRequest(BaseModel):
+    question: str
+
+class AskResponse(BaseModel):
+    answer: str
 from sqlmodel import Field, SQLModel
 
 class Contact(SQLModel, table=True):
@@ -43,3 +49,9 @@ class Service(SQLModel, table=True):
     department_id: Optional[int] = None
     contact_id: Optional[int] = None
     document_id: Optional[int] = None
+    
+class AskRequest(BaseModel):
+    question: str
+
+class AskResponse(BaseModel):
+    answer: str
