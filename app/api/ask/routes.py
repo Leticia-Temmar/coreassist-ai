@@ -6,7 +6,7 @@ from app.database import get_session
 from app.llm.parser import parse_user_question
 from app.models import Service
 from app.rag.answer_contacts import answer_contacts_question
-
+from app.rag.pdf.answer_pdf_question import answer_pdf_question
 router = APIRouter(prefix="/ask", tags=["ask"])
 
 
@@ -93,12 +93,23 @@ async def ask_with_llm(
         "result": result,
     }
 
-@router.post("/rag")
-def ask_rag(request: AskRagRequest):
+@router.post("/contacts-rag")
+def ask_contacts_rag(request: AskRagRequest):
     answer = answer_contacts_question(request.question)
 
     return {
         "question": request.question,
         "answer": answer,
-        "mode": "rag_with_llm"
+        "mode": "contacts_rag"
+    }
+
+
+@router.post("/pdf-rag")
+def ask_pdf_rag(request: AskRagRequest):
+    answer = answer_pdf_question(request.question)
+
+    return {
+        "question": request.question,
+        "answer": answer,
+        "mode": "pdf_rag"
     }

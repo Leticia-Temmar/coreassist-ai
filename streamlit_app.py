@@ -1,8 +1,6 @@
 import streamlit as st
 import requests
 
-API_URL = "http://127.0.0.1:8000/ask/rag"
-
 # ---------------------------------------------------
 # Page Config
 # ---------------------------------------------------
@@ -19,6 +17,16 @@ st.set_page_config(
 
 st.sidebar.title("CoreAssist AI")
 st.sidebar.caption("Gemini 2.0 Flash")
+
+rag_mode = st.sidebar.selectbox(
+    "Knowledge source",
+    ["PDF documents", "Contacts"]
+)
+
+if rag_mode == "PDF documents":
+    api_url = "http://127.0.0.1:8000/ask/pdf-rag"
+else:
+    api_url = "http://127.0.0.1:8000/ask/contacts-rag"
 
 # ---------------------------------------------------
 # Sidebar Custom Buttons
@@ -73,15 +81,16 @@ st.sidebar.markdown("""
 <div class="recent-item">💬 Sales team information</div>
 <div class="recent-item">💬 Company services</div>
 """, unsafe_allow_html=True)
+# ---------------------------------------------------
+# Session State
+# ---------------------------------------------------
 
+if "messages" not in st.session_state:
+    st.session_state.messages = []
 
 # ---------------------------------------------------
 # Example Questions
 # ---------------------------------------------------
-
-
-if "messages" not in st.session_state:
-    st.session_state.messages = []
 
 if len(st.session_state.messages) == 0:
     st.markdown(
@@ -101,12 +110,7 @@ if len(st.session_state.messages) == 0:
         unsafe_allow_html=True
     )
 
-# ---------------------------------------------------
-# Session State
-# ---------------------------------------------------
 
-if "messages" not in st.session_state:
-    st.session_state.messages = []
 
 # ---------------------------------------------------
 # Display Chat History
@@ -145,7 +149,7 @@ if user_question:
 
     try:
         response = requests.post(
-            API_URL,
+            api_url,
             json={"question": user_question},
             timeout=30
         )
