@@ -4,9 +4,9 @@ CoreAssist AI is an internal AI assistant designed to help employees quickly acc
 
 Instead of manually searching through documents or internal tools, users can ask natural language questions such as:
 
-> "How do I request time off?"
-> "Who works in Software Engineering?"
-> "Where can I find the onboarding procedure?"
+- "How do I request time off?"
+- "Who works in Software Engineering?"
+- "Where can I find the onboarding procedure?"
 
 The assistant retrieves relevant context from internal data sources and generates contextual answers using Gemini AI.
 
@@ -81,13 +81,17 @@ app/
 
 ## Clone repository
 
+```bash
 git clone https://github.com/Leticia-Temmar/coreassist-ai.git
 cd coreassist-ai
+```
 
 # Create virtual environment
 
+```bash
 python -m venv venv
 source venv/bin/activate
+```
 
 # Install dependencies
 
@@ -107,8 +111,10 @@ streamlit run streamlit_app.py
 
 # API Routes
 
-/ask/contacts-rag : RAG over contacts database
-/ask/pdf-rag : RAG over PDF documents
+| Route | Description |
+|---|---|
+| `/ask/contacts-rag` | RAG over contacts database |
+| `/ask/pdf-rag` | RAG over PDF documents |
 
 # Roadmap
 
